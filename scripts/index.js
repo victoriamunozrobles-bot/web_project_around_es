@@ -28,3 +28,23 @@ const initialCards = [
 initialCards.forEach(function (card) {
   console.log(card.name);
 });
+
+const editProfileBtn = document.querySelector(".profile__edit-button");
+const editModal = document.querySelector("#edit-popup");
+const closeModalBtn = editModal.querySelector(".popup__close");
+
+function openModal(modal) {
+  modal.classList.add("popup_is-opened");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("popup_is-opened");
+}
+
+editProfileBtn.addEventListener("click", function (evt) {
+  openModal(editModal);
+});
+
+closeModalBtn.addEventListener("click", function (evt) {
+  closeModal(editModal);
+});
