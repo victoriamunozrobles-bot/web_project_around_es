@@ -60,6 +60,17 @@ function handleOpenedEditModal() {
   fillProfileForm();
 }
 
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  const newName = nameInput.value;
+  const newDescription = descriptionInput.value;
+
+  profileName.textContent = newName;
+  profileDescription.textContent = newDescription;
+
+  closeModal(editModal);
+}
+
 editProfileBtn.addEventListener("click", function (evt) {
   handleOpenedEditModal();
 });
@@ -67,3 +78,5 @@ editProfileBtn.addEventListener("click", function (evt) {
 closeModalBtn.addEventListener("click", function (evt) {
   closeModal(editModal);
 });
+
+editModal.addEventListener("submit", handleProfileFormSubmit);
