@@ -64,10 +64,29 @@ initialCards.forEach(function (card) {
 
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
+  modal.addEventListener("mousedown", closeOnOverlayClick);
+  document.addEventListener("keydown", closeOnEscPress);
 }
 
 function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
+  modal.removeEventListener("mousedown", closeOnOverlayClick);
+  document.removeEventListener("keydown", closeOnEscPress);
+}
+
+function closeOnOverlayClick(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.currentTarget);
+  }
+}
+
+function closeOnEscPress(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".popup_is-opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
 }
 
 function openImagePopup(link, name) {
@@ -218,7 +237,7 @@ addCardBtn.addEventListener("click", () => openModal(newCardModal));
 
 newCardCloseBtn.addEventListener("click", () => closeModal(newCardModal));
 
-newCardForm.addEventListener("submit", handleCardFormSubmit);
+newCardFormElement.addEventListener("submit", handleCardFormSubmit);
 
 popupCloseBtn.addEventListener("click", () => closeModal(imageModal));
 
