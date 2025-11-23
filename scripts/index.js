@@ -39,7 +39,11 @@ const cardTemplate = document.querySelector("#card__template").content;
 const addCardBtn = document.querySelector(".profile__add-button");
 const newCardModal = document.querySelector("#new-card-popup");
 const newCardCloseBtn = newCardModal.querySelector(".popup__close");
-const newCardForm = newCardModal.querySelector(".popup__form");
+const newCardFormElement = document.querySelector("#new-card-form");
+const newCardFormInputs = Array.from(
+  newCardFormElement.querySelectorAll(".popup__input")
+);
+const newCardFormSubmitBtn = newCardFormElement.querySelector(".popup__button");
 const cardNameInput = newCardModal.querySelector(
   ".popup__input_type_card-name"
 );
@@ -48,6 +52,11 @@ const imageModal = document.querySelector("#image-popup");
 const popupImage = imageModal.querySelector(".popup__image");
 const popupCaption = imageModal.querySelector(".popup__caption");
 const popupCloseBtn = imageModal.querySelector(".popup__close");
+const editFormElement = document.querySelector("#edit-profile-form");
+const editFormElementInputs = Array.from(
+  editFormElement.querySelectorAll(".popup__input")
+);
+const editModalSubmitBtn = editFormElement.querySelector(".popup__button");
 
 initialCards.forEach(function (card) {
   renderCard(card.name, card.link, cardsList);
@@ -104,7 +113,7 @@ function handleCardFormSubmit(evt) {
   newCardForm.reset();
 }
 
-function getCardElement(name = "Sin título", link = "images/placeholder.jpg") {
+function getCardElement(name, link) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__title");
   const cardImage = cardElement.querySelector(".card__image");
@@ -135,6 +144,65 @@ function renderCard(name, link, container) {
   const newCardElement = getCardElement(name, link);
   container.append(newCardElement);
 }
+function showInputError(formElement, element, errorMessage) {
+  const errorElement = formElement.querySelector(
+    `span.${element.name}-input-error`
+  );
+  element.classList.add("popup__input-error_active");
+  errorElement.classList.add("popup__input_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("popup__msj-error_active");
+}
+
+function hideInputError(formElement, element) {
+  const errorElement = formElement.querySelector(
+    `span.${element.name}-input-error`
+  );
+  element.classList.remove("popup__input-error_active");
+  errorElement.classList.remove("popup__input_type_error");
+  errorElement.classList.remove("popup__msj-error_active");
+  errorElement.textContent = "";
+}
+
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("popup__button_disabled");
+    buttonElement.disabled = true;
+  } else {
+    buttonElement.classList.remove("popup__button_disabled");
+    buttonElement.disabled = false;
+  }
+}
+
+editFormElementInputs.forEach((input) => {
+  input.addEventListener("input", function () {
+    if (!input.validity.valid) {
+      showInputError(editFormElement, input, input.validationMessage);
+    } else {
+      hideInputError(editFormElement, input);
+    }
+
+    toggleButtonState(editFormElementInputs, editModalSubmitBtn);
+  });
+});
+
+newCardFormInputs.forEach((input) => {
+  input.addEventListener("input", function () {
+    if (!input.validity.valid) {
+      showInputError(newCardFormElement, input, input.validationMessage);
+    } else {
+      hideInputError(newCardFormElement, input);
+    }
+
+    toggleButtonState(newCardFormInputs, newCardFormSubmitBtn);
+  });
+});
 
 editProfileBtn.addEventListener("click", function (evt) {
   handleOpenedEditModal();
@@ -153,3 +221,6 @@ newCardCloseBtn.addEventListener("click", () => closeModal(newCardModal));
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
 popupCloseBtn.addEventListener("click", () => closeModal(imageModal));
+
+toggleButtonState(editFormElementInputs, editModalSubmitBtn);
+toggleButtonState(newCardFormInputs, newCardFormSubmitBtn);
