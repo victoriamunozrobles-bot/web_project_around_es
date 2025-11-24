@@ -7,7 +7,7 @@ Se ha desarrollado un conjunto de funciones puras y reutilizables para desacopla
 ### **A. Funciones de Control de Modales (UX/Accesibilidad)**
 Se implementó un control completo de las ventanas emergentes (.popup) que prioriza la experiencia del usuario (UX) y la accesibilidad.
 
-    1. openModal(modal): Muestra cualquier ventana emergente añadiendo la clase de apertura (.popup_is-opened). Permite encapsulamiento y reutilización.
+    1. openModal(modal): Muestra cualquier ventana emergente añadiendo la clase de apertura (.popup_is-opened). Permite reutilización.
 
     2. closeModal(modal): Oculta la ventana emergente y elimina todos los listeners de cierre asociados. Ayuda con la limpieza de recursos.
     
