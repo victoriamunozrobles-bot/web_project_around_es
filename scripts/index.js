@@ -1,3 +1,15 @@
+import Card from "./Cards.js";
+import FormValidator from "./FormValidator.js";
+
+import {
+  openModal,
+  closeModal,
+  closeOnOverlayClick,
+  closeOnEscPress,
+  openImagePopup,
+  fillProfileForm,
+} from "./utils.js";
+
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -57,7 +69,7 @@ const validationConfig = {
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_type_error",
   errorVisibleClass: "popup__msj-error_active",
-  inputBorderErrorClass: ".popup__input-error_active",
+  inputBorderErrorClass: "popup__input-error_active",
 };
 
 function handleOpenedEditModal() {

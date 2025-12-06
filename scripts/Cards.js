@@ -13,7 +13,10 @@ export default class Card {
   }
 
   getCardElement() {
-    this._cardElement = this._getTemplate();
+    const templateContent = this._getTemplate();
+
+    this._cardElement = templateContent.querySelector(".card");
+
     this._setEventListeners();
     this._fillCardData();
 
