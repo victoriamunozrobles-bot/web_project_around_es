@@ -1,5 +1,6 @@
 import Card from "./Cards.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
 
 import {
   openModal,
