@@ -1,0 +1,32 @@
+export default class Popup {
+  constructor(popupSelector) {
+    this._popupElement = document.querySelctor(popupSelector);
+    this._closeButton = this._popupElement.querySelctor(".popup__close");
+  }
+  open() {
+    this._popupElement.classList.add("popup_is-opened");
+    document.addEventListener("keydown", this._handleEscClose);
+  }
+
+  close() {
+    this._popupElement.classList.remove("popup_is-opened");
+    document.removeEventListener("keydown", this._handleEscClose);
+  }
+
+  handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      this.close();
+    }
+  }
+
+  setEventListeners() {
+    this._popupElement.addEventListener("mousedown", (evt) => {
+      if (
+        evt.target === evt.currentTarget ||
+        evt.target === this._closeButton
+      ) {
+        this.close();
+      }
+    });
+  }
+}
