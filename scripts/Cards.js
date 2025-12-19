@@ -3,22 +3,22 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardSelector)
-      .content.cloneNode(true);
+      .content.querySelector(".card")
+      .cloneNode(true);
     return cardElement;
   }
 
   getCardElement() {
-    const templateContent = this._getTemplate();
+    this._cardElement = this._getTemplate();
 
-    this._cardElement = templateContent.querySelector(".card");
-
-    this._setEventListeners();
     this._fillCardData();
+    this._setEventListeners();
 
     return this._cardElement;
   }
@@ -33,7 +33,7 @@ export default class Card {
   }
 
   _handleImageClick() {
-    openImagePopup(this._link, this._name);
+    this._handleCardClick(this._link, this._name);
   }
 
   _setEventListeners() {
