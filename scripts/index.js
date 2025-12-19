@@ -1,7 +1,8 @@
 import Card from "./Cards.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
-import Popup from "./Popup.js;";
+import Popup from "./Popup.js";
+import PopupWithForm from "./PopupWithForm.js";
 
 import {
   openModal,
@@ -138,3 +139,20 @@ const newCardFormValidator = new FormValidator(
   newCardFormElement
 );
 newCardFormValidator.enableValidation();
+
+const profilePopup = new PopupWithForm({
+  popupSelector: ".popup_type_edit-profile",
+  handleFormSubmit: (formData) => {
+    console.log(formData);
+    profilePopup.close();
+  },
+});
+profilePopup.setEventListeners();
+
+const addCardPopup = new PopupWithForm({
+  popupSelector: ".popup_type_add-card",
+  handleFormSubmit: (formData) => {
+    addCardPopup.close();
+  },
+});
+addCardPopup.setEventListeners();
