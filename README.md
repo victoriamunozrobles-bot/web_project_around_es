@@ -1,42 +1,59 @@
-# Tripleten web_project_around_es
-Este proyecto web implementa una interfaz de usuario dinámica con manipulación de tarjetas y una gestión de formularios avanzada basada en JavaScript Vanilla, centrándose en la reutilización de código y la validación universal.
+# Around The U.S. 🇺🇸
 
-## **1. Arquitectura de Componentes y Modularidad**
-Se ha desarrollado un conjunto de funciones puras y reutilizables para desacoplar la lógica del negocio de la manipulación del DOM (Document Object Model), lo que facilita la escalabilidad y el mantenimiento del código.
+## 📋 Descripción del Proyecto
 
-### **A. Funciones de Control de Modales (UX/Accesibilidad)**
-Se implementó un control completo de las ventanas emergentes (.popup) que prioriza la experiencia del usuario (UX) y la accesibilidad.
+**Around The U.S.** es una aplicación web interactiva que permite a los usuarios compartir sus experiencias de viaje creando una galería de fotos personalizada. Este proyecto simula una red social donde los usuarios pueden gestionar su perfil e interactuar con el contenido.
 
-    1. openModal(modal): Muestra cualquier ventana emergente añadiendo la clase de apertura (.popup_is-opened). Permite reutilización.
+La aplicación se conecta a una **API REST** para garantizar la persistencia de los datos, lo que significa que tu perfil, tus fotos y tus "likes" se guardan en un servidor real.
 
-    2. closeModal(modal): Oculta la ventana emergente y elimina todos los listeners de cierre asociados. Ayuda con la limpieza de recursos.
-    
-    3. closeOnOverlayClick(evt): Cierra el modal solo si el clic ocurre directamente sobre el contenedor (evt.target === evt.currentTarget). Permite el control de burbujeo de eventos, y contribuye a UX.
-    
-    4. closeOnEscPress(evt):Cierra cualquier modal visible (.popup_is-opened) al presionar la tecla Escape. Contribuye a la accesibilidad.
-    
-## **2. Sistema de Validación de Formularios (Universal)**
-Se creó un sistema de validación que se aplica a múltiples formularios (Editar Perfil y Nueva Tarjeta) sin duplicar la lógica, cumpliendo con los estándares de validación HTML5.
+### 🚀 Funcionalidades Principales:
 
-### **A. Funciones de Validación Base**
-El código utiliza funciones de bajo nivel que operan sobre un único campo y su elemento de error asociado:
+- **Gestión de Perfil:** Edición de nombre, descripción y actualización de foto de perfil (Avatar) con persistencia en servidor.
+- **Gestión de Tarjetas:** Crear nuevas tarjetas con imágenes y títulos.
+- **Interactividad:** Dar y quitar "Me gusta" (Likes) a las fotos, con contador actualizado en tiempo real.
+- **Eliminación:** Borrar tus propias tarjetas (con confirmación de seguridad).
+- **Visualización:** Abrir las imágenes en tamaño completo (Popup) para ver los detalles.
+- **Validación:** Formularios con validación en vivo (UX) para asegurar que los datos sean correctos antes de enviarlos.
 
-    1. showInputError(formElement, element, errorMessage):** Recibe el formElement como argumento para buscar localmente el span de error, aplicando clases CSS (.popup__input_type_error, etc.) y mostrando el mensaje (element.validationMessage).
+---
 
-    2. hideInputError(formElement, element): Oculta el mensaje de error y remueve las clases visuales de error.
-    
-    3. hasInvalidInput(inputList): Utiliza el método Array.prototype.some() para devolver true si al menos un campo (inputElement.validity.valid) es inválido, verificando todos los campos de la lista.
-    
-    4. toggleButtonState(inputList, buttonElement): Controla el estado del botón de envío, deshabilitándolo mediante la propiedad buttonElement.disabled = true y la clase CSS (.popup__button_disabled) si hasInvalidInput devuelve true.
-    
-### **B. Implementación e Inicialización**
-- La validación se inicializa mediante dos bucles forEach independientes que adjuntan un event listener de tipo input a cada campo.
-- La validación se desencadena en tiempo real (mientras el usuario escribe), proporcionando feedback inmediato (UX).
-- La función toggleButtonState se llama explícitamente al cargar el script para establecer el estado inicial de los botones, asegurando que los botones de los formularios vacíos comiencen deshabilitados (cumpliendo con la restricción de campos required).
+## 🛠️ Tecnologías y Técnicas Utilizadas
 
-## **3. Manipulación de Elementos (Tarjetas)** 
-Se implementó la lógica para la gestión dinámica de las tarjetas del sitio.
-    1. getCardElement(name, link): Función que clona el contenido de la etiqueta <template> (cardTemplate.content), inyecta los datos de name y link, y adjunta todos los event listeners necesarios (Me gusta, Eliminar, Abrir imagen).
-    *Nota: Los valores por defecto de los argumentos fueron eliminados (name, link), ya que el nuevo sistema de validación garantiza que los datos de entrada son siempre válidos.*
-    Manejo de Eventos Locales: Se utilizan event listeners locales dentro de getCardElement para manipular la tarjeta clonada, como evt.target.classList.toggle() para el botón "Me gusta" y evt.target.closest(".card").remove() para eliminar la tarjeta.
-    2. handleCardFormSubmit: Gestiona el evento submit del formulario de la nueva tarjeta, invoca renderCard, cierra el modal y llama a newCardFormElement.reset() para limpiar los campos y restaurar su estado inicial.
+El proyecto fue construido siguiendo las mejores prácticas de desarrollo web moderno, con un enfoque en la programación orientada a objetos (POO) y la modularidad.
+
+- **HTML5 Semántico:** Estructura clara y accesible.
+- **CSS3:** Diseño responsivo (Mobile First) utilizando Flexbox y Grid Layout.
+- **Metodología BEM:** Organización estricta de archivos y clases CSS (Bloque, Elemento, Modificador) para un código mantenible y escalable.
+- **JavaScript (ES6+):**
+  - **Programación Orientada a Objetos (POO):** Uso de clases (`Card`, `Section`, `UserInfo`, `Popup`, `Api`) para encapsular la lógica.
+  - **Módulos (Import/Export):** Para dividir el código en archivos lógicos.
+  - **Asincronía y Promesas:** Comunicación con la API mediante `fetch()`, manejo de respuestas y errores.
+- **Git y GitHub:** Control de versiones.
+
+---
+
+## 📂 Estructura de Archivos (BEM)
+
+El proyecto sigue la estructura de archivos anidada (Nested BEM) para mantener el orden:
+
+```text
+web_project_around_es/
+├── blocks/             # Bloques BEM (Estilos CSS modulares)
+│   ├── card.css        # Estilos para el bloque de tarjeta
+│   ├── popup.css       # Estilos generales para ventanas emergentes
+│   ├── profile.css     # Estilos para la sección de perfil
+│   └── ...
+├── images/             # Activos visuales (iconos, avatares, logos)
+├── pages/              # Archivos específicos de la página principal
+│   ├── index.css       # Hoja de estilos principal (imports)
+│   └── index.js        # (Opcional si usas esta estructura para JS)
+├── scripts/            # Lógica JavaScript dividida en clases
+│   ├── Api.js          # Clase para la comunicación con el servidor
+│   ├── Cards.js        # Clase para la creación y manejo de tarjetas
+│   ├── FormValidator.js # Clase para la validación de formularios
+│   ├── Section.js      # Clase para renderizar secciones en el DOM
+│   ├── UserInfo.js     # Clase para manejar datos del usuario
+│   └── ...
+├── vendor/             # Librerías y archivos de terceros (Fuentes, Normalize)
+└── index.html          # Punto de entrada HTML
+```
