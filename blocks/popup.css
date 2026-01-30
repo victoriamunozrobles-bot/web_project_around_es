@@ -182,3 +182,16 @@
     padding: 0;
   }
 }
+
+.popup__container_type_confirmation {
+  padding: 34px 36px;
+  min-height: auto;
+}
+
+.popup__title_type_confirmation {
+  margin-bottom: 38px;
+}
+
+.popup__button_type_confirmation {
+  margin-top: 0;
+}
